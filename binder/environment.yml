@@ -4,7 +4,6 @@ channels:
 dependencies:
   - boto
   - requests
-  - pickle
   - logging
   - matplotlib
   - numpy
