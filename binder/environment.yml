@@ -2,8 +2,14 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - pickle
+  - logging
   - matplotlib
   - numpy
   - pandas
+  - periodictable
+  - scipy
+  - scikit-learn
+  - pathlib
 #  - pip:
 #    - sphinx-gallery

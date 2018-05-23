@@ -8,7 +8,6 @@ from matplotlib.collections import PatchCollection
 import numpy as np
 import pandas as pd
 import pickle
-from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
 from sklearn.externals import joblib
 
 logger = logging.getLogger(__name__)
