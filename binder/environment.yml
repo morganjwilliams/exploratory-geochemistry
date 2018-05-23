@@ -2,6 +2,8 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - boto
+  - requests
   - pickle
   - logging
   - matplotlib
