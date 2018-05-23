@@ -4,7 +4,6 @@ channels:
 dependencies:
   - boto
   - requests
-  - logging
   - matplotlib
   - numpy
   - pandas
