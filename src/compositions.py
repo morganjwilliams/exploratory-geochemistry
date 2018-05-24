@@ -75,7 +75,8 @@ def add_ratio(df: pd.DataFrame, ratio, alias=''):
 class LinearTransform(TransformerMixin):
     def __init__(self, **kwargs):
         self.kpairs = kwargs
-        self.label = 'Crude'
+        self.label = 'Linear/Crude'
+        self.longlabel = 'Linear Transform'
 
     def transform(self, X, *args):
         X = np.array(X)
@@ -93,6 +94,7 @@ class ALRTransform(TransformerMixin):
     def __init__(self, **kwargs):
         self.kpairs = kwargs
         self.label = 'ALR'
+        self.longlabel = 'Additive Log-ratio Transform'
 
     def transform(self, X, *args):
         X = np.array(X)
@@ -110,6 +112,7 @@ class CLRTransform(TransformerMixin):
     def __init__(self, **kwargs):
         self.kpairs = kwargs
         self.label = 'CLR'
+        self.longlabel = 'Centred Log-ratio Transform'
 
     def transform(self, X, *args):
         X = np.array(X)
@@ -127,6 +130,7 @@ class ILRTransform(TransformerMixin):
     def __init__(self, **kwargs):
         self.kpairs = kwargs
         self.label = 'ILR'
+        self.longlabel = 'Isometric Log-ratio Transform'
 
     def transform(self, X, *args):
         X = np.array(X)
