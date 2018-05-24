@@ -12,3 +12,4 @@ dependencies:
   - scikit-learn
   - pathlib
   - psutil
+  - memory_profiler

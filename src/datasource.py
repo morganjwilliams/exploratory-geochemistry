@@ -14,12 +14,17 @@ def download_data(filename_remote, filename_local):
     data.get_contents_to_filename(filename_local)
     
     
-def load_df(filename_local):
+def load_df(filename_local, dense=True):
     if Path(filename_local).exists():
-        return pd.read_pickle(filename_local)
-    else:
+        df = pd.read_pickle(filename_local)
+        if dense:
+            df = df.to_dense()
+        return df
+    else:   
+        print('File does not exist. Attempting download.')
         try:
             download_data(filename_local, filename_local)
-            return pd.read_pickle(filename_local)
+            print('Download completed. Loading file.')
+            load_df(filename_local, dense=dense)
         except:
             'Error: Data needs to be downloaded first.'
