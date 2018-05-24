@@ -20,5 +20,6 @@ def load_df(filename_local):
     else:
         try:
             download_data(filename_local, filename_local)
+            return pd.read_pickle(filename_local)
         except:
             'Error: Data needs to be downloaded first.'
