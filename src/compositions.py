@@ -5,8 +5,10 @@ import scipy
 
 
 def close(X: np.ndarray):
-    """Closure operator for numpy arrays."""
-    return np.divide(X, np.sum(X, axis=1)[:, np.newaxis])
+    if X.ndim == 2:
+        return np.divide(X, np.sum(X, axis=1)[:, np.newaxis])
+    else:
+        return np.divide(X, np.sum(X, axis=0))
 
 
 def nancov(X, method='replace'):
@@ -145,24 +147,58 @@ class ILRTransform(TransformerMixin):
         return self
 
 
-def alr(X: np.ndarray, ind: int=-1, **kwargs):
-    """
-    Additive log ratio transform.
-    """
-    if ind < 0: ind += X.shape[1]
-    X = X / X[:, ind][:, np.newaxis]
-    Y = np.log(X[:, [i for i in range(X.shape[1]) if not i==ind]])  # Log operation from D to D-1
+def additive_log_ratio(X: np.ndarray, ind: int=-1):
+    """Additive log ratio transform. """
+    
+    Y = X.copy()
+    assert Y.ndim in [1, 2]
+    dimensions = Y.shape[Y.ndim-1]
+    if ind < 0: ind += dimensions
+    
+    if Y.ndim == 2:
+        Y = np.divide(Y, Y[:, ind][:, np.newaxis])
+        Y = np.log(Y[:, [i for i in range(dimensions) if not i==ind]])
+    else:
+        Y = np.divide(X, X[ind])
+        Y = np.log(Y[[i for i in range(dimensions) if not i==ind]])
+        
     return Y
 
-
-def inv_alr(Y: np.ndarray, **kwargs):
+def inverse_additive_log_ratio(Y: np.ndarray, ind=-1):
     """
     Inverse additive log ratio transform.
     """
-    Y =  np.concatenate((Y, np.zeros((Y.shape[0], 1))), axis=1)
-    X = np.exp(Y)  # Inverse log operation, from D-1 to D
-    X = np.divide(X, np.nansum(X, axis=1)[:, np.newaxis])  # Closure operation
+    assert Y.ndim in [1, 2]
+    
+    X = Y.copy()
+    dimensions = X.shape[X.ndim-1]
+    idx = np.arange(0, dimensions+1)
+    
+    if ind != -1:
+        idx = np.array(list(idx[idx < ind]) + 
+                       [-1] + 
+                       list(idx[idx >= ind+1]-1))
+    
+    # Add a zero-column and reorder columns
+    if Y.ndim == 2:
+        X = np.concatenate((X, np.zeros((X.shape[0], 1))), axis=1)
+        X = X[:, idx]
+    else:
+        X = np.append(X, np.array([0]))
+        X = X[idx]
+    
+    # Inverse log and closure operations
+    X = np.exp(X)
+    X = close(X)
     return X
+
+
+def alr(*args, **kwargs):
+    return additive_log_ratio(*args, **kwargs)
+
+
+def inv_alr(*args, **kwargs):
+    return inverse_additive_log_ratio(*args, **kwargs)
 
 
 def ALR_mean(X, index=-1):
