@@ -1,5 +1,7 @@
 Aitchison, J., 1984. The statistical analysis of geochemical compositions. Journal of the International Association for Mathematical Geology 16, 531–564.
 
+Aitchison, J., Barceló-Vidal, C., Martín-Fernández, J.A., Pawlowsky-Glahn, V., 2000. Logratio Analysis and Compositional Distance. Mathematical Geology 32, 271–275. https://doi.org/10.1023/A:1007529726302
+
 von Eynatten, H., Pawlowsky-Glahn, V., Egozcue, J.J., 2002. Understanding Perturbation on the Simplex: A Simple Method to Better Visualize and Interpret Compositional Data in Ternary Diagrams. Mathematical Geology 34, 249–257. https://doi.org/10.1023/A:1014826205533
 
 Martin-Fernandez, J.A., Bren, M., Barceló-Vidal, C., Pawlowsky-Glahn, V., 1999. A Measure of Difference for Compositional Data based on Measures of Divergence, in: Proceedings of the 5th Annual Conference of the International Association for Mathematical Geology. Presented at the IAMG’99, Tapir, Trondheim, Norway, p. 5.
