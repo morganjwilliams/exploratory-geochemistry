@@ -5,6 +5,8 @@ dependencies:
   - boto
   - requests
   - matplotlib
+  - python-ternary
+  - basemap
   - numpy
   - pandas
   - periodictable
