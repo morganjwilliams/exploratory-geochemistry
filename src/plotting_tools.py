@@ -1,8 +1,16 @@
+import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
 from mpl_toolkits.axes_grid1 import make_axes_locatable
-import pandas as pd
-import numpy as np
+import matplotlib.colors as colors
+import matplotlib.ticker as ticker
+import matplotlib.cm as cm
+import matplotlib.lines as lines
+from matplotlib.ticker import FormatStrFormatter, \
+                              ScalarFormatter, \
+                              LogFormatter
+        
 
 
 def colorbar(mappable, **kwargs):
@@ -110,3 +118,57 @@ def vector_to_line(mu:np.array,
     line =  length * np.dot(parts[:, np.newaxis], vector[np.newaxis, :]) + mu
     line =  length * parts.reshape(parts.shape[0], 1) * vector + mu
     return line
+
+
+def default_alpha(): return 0.5
+def default_color(): return '#555555'
+def default_zorder(): return 1
+def default_linestyle(): return "-"
+
+def TE_spiderplot(ax, df, elements, linestyles= {}, label='',
+                  cmap = plt.get_cmap('Paired'),
+                  marker='o', markersize=3, **kwargs):
+    """
+    Plots spidergrams for trace elements.
+
+    Inputs:
+
+        df - pandas dataframe
+    """
+    analyses = df[elements].transpose().values.astype(np.float)
+    if len(analyses.shape)<2: # If data is a single analysis
+        analyses = analyses.reshape(analyses.shape[0], 1)
+    #indexes = np.tile(np.arange(len(elements)),(analyses.shape[1],1)).T
+    # Plot the data points first, but can't have changes in zorder
+    # Plot each of the lines, can have zorder
+    if linestyles:
+        ls = ax.plot(np.arange(len(elements)), analyses)
+        for l, c, z, a in zip(ls,
+                              linestyles.get('color', default_alpha()),
+                              linestyles.get('zorder', default_zorder()),
+                              linestyles.get('alpha', default_alpha())):
+            l.set_color(c)
+            l.set_zorder(z)
+            l.set_alpha(a)
+            yd = l.get_ydata()
+            sc = ax.scatter(np.arange(len(elements)), yd,
+                            s=markersize, c=c, marker=marker)
+    else:
+        ls = ax.plot(np.arange(len(elements)), analyses,
+                     marker=None, **kwargs)
+        scatterindexes = np.tile(np.arange(len(elements)), \
+                                 (analyses.shape[1],1)).T
+        sc = ax.scatter(scatterindexes, analyses,
+                        marker=marker, s=markersize, **kwargs)
+    return ls
+
+def TE_spiderfill(ax, df, elements, **kwargs):
+    analyses = df[elements].transpose().values.astype(np.float)
+    indexes = np.arange(len(elements))
+    try:
+        ax.fill_between(indexes,
+                    np.nanmin(analyses, axis=1),
+                    np.nanmax(analyses, axis=1),
+                    **kwargs)
+    except:
+        pass
