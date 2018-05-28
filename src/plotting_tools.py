@@ -10,7 +10,7 @@ import matplotlib.lines as lines
 from matplotlib.ticker import FormatStrFormatter, \
                               ScalarFormatter, \
                               LogFormatter
-        
+
 
 
 def colorbar(mappable, **kwargs):
@@ -40,7 +40,7 @@ def plot_latlong(df,
     else:
         plt.gca().scatter(x, y, **kwargs)
 
-        
+
 def age_distribution(df,
                      yvar=None,
                      ax=None,
@@ -78,8 +78,8 @@ def cleanup_ternary(tax):
     a.spines['left'].set_visible(False)
     a.get_xaxis().set_ticks([])
     a.get_yaxis().set_ticks([])
-    
-    
+
+
 
 def draw_vector(v0, v1,
                 ax=None,
@@ -125,20 +125,15 @@ def default_color(): return '#555555'
 def default_zorder(): return 1
 def default_linestyle(): return "-"
 
-def TE_spiderplot(ax, df, elements, linestyles= {}, label='',
+def TE_spiderplot(ax, df, elements, linestyles= {},
                   cmap = plt.get_cmap('Paired'),
                   marker='o', markersize=3, **kwargs):
     """
     Plots spidergrams for trace elements.
-
-    Inputs:
-
-        df - pandas dataframe
     """
     analyses = df[elements].transpose().values.astype(np.float)
     if len(analyses.shape)<2: # If data is a single analysis
         analyses = analyses.reshape(analyses.shape[0], 1)
-    #indexes = np.tile(np.arange(len(elements)),(analyses.shape[1],1)).T
     # Plot the data points first, but can't have changes in zorder
     # Plot each of the lines, can have zorder
     if linestyles:
@@ -158,6 +153,8 @@ def TE_spiderplot(ax, df, elements, linestyles= {}, label='',
                      marker=None, **kwargs)
         scatterindexes = np.tile(np.arange(len(elements)), \
                                  (analyses.shape[1],1)).T
+
+        del kwargs['label']
         sc = ax.scatter(scatterindexes, analyses,
                         marker=marker, s=markersize, **kwargs)
     return ls

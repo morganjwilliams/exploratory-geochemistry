@@ -59,6 +59,8 @@ class RefComp(object):
         self.data.loc[self.vars, 'scale'] = \
             self.data.loc[self.vars, 'units'].apply(scale_function,
                                                     target_unit=to)
+        self.data.loc[self.vars, 'value'] *= self.data.loc[self.vars, 'scale']
+        self.data.loc[self.vars, 'units'] = to
 
     def normalize(self, df, aux_cols=["LOD","2SE"]):
         """

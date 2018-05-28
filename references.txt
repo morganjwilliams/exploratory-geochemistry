@@ -6,3 +6,4 @@ von Eynatten, H., Pawlowsky-Glahn, V., Egozcue, J.J., 2002. Understanding Pertur
 
 Martin-Fernandez, J.A., Bren, M., Barceló-Vidal, C., Pawlowsky-Glahn, V., 1999. A Measure of Difference for Compositional Data based on Measures of Divergence, in: Proceedings of the 5th Annual Conference of the International Association for Mathematical Geology. Presented at the IAMG’99, Tapir, Trondheim, Norway, p. 5.
 
+Palarea-Albaladejo, J. and Martin-Fernandez, J.A., 2008. A modified EM alr-algorithm for replacing rounded zeros in compositional data sets. Computers & Geosciences 34, 902–917.
