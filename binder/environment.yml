@@ -9,6 +9,7 @@ dependencies:
   - basemap
   - numpy
   - pandas
+  - xlrd
   - periodictable
   - scipy
   - scikit-learn
